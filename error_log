@@ -1,0 +1,21 @@
+[20-Nov-2016 23:21:29 Europe/Bucharest] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 23:21:38 Europe/Bucharest] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 23:21:40 Europe/Bucharest] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 23:21:54 Europe/Bucharest] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 23:21:59 Europe/Bucharest] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 13:28:09 America/Los_Angeles] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 13:28:12 America/Los_Angeles] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 13:28:13 America/Los_Angeles] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 13:28:14 America/Los_Angeles] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 13:28:19 America/Los_Angeles] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 13:28:20 America/Los_Angeles] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 13:28:20 America/Los_Angeles] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 13:28:21 America/Los_Angeles] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 13:29:28 America/Los_Angeles] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[20-Nov-2016 23:29:32 Europe/Bucharest] PHP Fatal error:  Cannot unset string offsets in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 396
+[06-Dec-2016 23:16:32 Europe/Bucharest] PHP Fatal error:  Cannot use object of type stdClass as array in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 406
+[06-Dec-2016 23:16:37 Europe/Bucharest] PHP Fatal error:  Cannot use object of type stdClass as array in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 406
+[06-Dec-2016 23:17:36 Europe/Bucharest] PHP Fatal error:  Cannot use object of type stdClass as array in /home/hartaverde/porto.harta-verde.ro/sites/all/themes/Porto/template.php on line 406
+[11-Dec-2016 00:34:13 Europe/Bucharest] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/hartaverde/porto.harta-verde.ro/includes/token.inc on line 222
+[11-Dec-2016 00:34:15 Europe/Bucharest] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/hartaverde/porto.harta-verde.ro/includes/token.inc on line 221
+[11-Dec-2016 00:34:21 Europe/Bucharest] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/hartaverde/porto.harta-verde.ro/includes/token.inc on line 223
