@@ -1,0 +1,2 @@
+AddHandler application/x-httpd-php56cgi .php
+Action application/x-httpd-php56cgi /cgi-bin/php56.cgi

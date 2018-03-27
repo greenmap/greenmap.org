@@ -1,0 +1,229 @@
+<?php
+
+/**
+ * @file
+ * Defines a table widget for text and numeric fields.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function options_table_theme() {
+  return array(
+    'options_table_form_table' => array(
+      'render element' => 'form',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_info().
+ *
+ * Field type modules willing to use those widgets should:
+ * - Use hook_field_widget_info_alter() to append their field own types to the
+ *   list of types supported by the widgets,
+ * - Implement hook_options_list() to provide the list of options.
+ * See list.module.
+ */
+function options_table_field_widget_info() {
+  return array(
+    'options_table' => array(
+      'label' => t('Draggable table'),
+      'field types' => array('list_integer',
+        'list_float',
+        'list_text',
+        'taxonomy_term_reference',
+        'entityreference',
+      ),
+      'behaviors' => array(
+        'multiple values' => FIELD_BEHAVIOR_CUSTOM,
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function options_table_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  // Abstract over the actual field columns, to allow different field types to
+  // reuse the widget.
+  $value_key = key($field['columns']);
+
+  // Override the widget type to reuse all the options module logic.
+  $instance['widget']['type'] = 'options_buttons';
+  $type = str_replace('options_', '', $instance['widget']['type']);
+  $multiple = $field['cardinality'] > 1 || $field['cardinality'] == FIELD_CARDINALITY_UNLIMITED;
+  $required = $element['#required'];
+  $has_value = isset($items[0][$value_key]);
+  $properties = _options_properties($type, $multiple, $required, $has_value);
+
+  $entity_type = $element['#entity_type'];
+  $entity = $element['#entity'];
+
+  // Prepare the list of options.
+  $options = _options_get_options($field, $instance, $properties, $entity_type, $entity);
+
+  // Put current field values in shape.
+  $default_value = _options_storage_to_form($items, $options, $value_key, $properties);
+
+  // Sort options based on field delta values.
+  $sorted_options = array();
+  foreach ($default_value as $value) {
+    $sorted_options[$value] = $options[$value];
+    unset($options[$value]);
+  }
+  $sorted_options = $sorted_options + $options;
+
+  // If required and there is one single option, preselect it.
+  if ($required && count($options) == 1) {
+    reset($options);
+    $default_value = array(key($options));
+  }
+
+  $row_elements = array();
+  $index = 0;
+  foreach ($sorted_options as $option => $label) {
+    // Build rows of the form elements in the table.
+    $row_elements[$option] = array(
+      'label' => array('#markup' => $label),
+      'weight' => array(
+        '#type' => 'weight',
+        '#title' => t('Weight'),
+        '#title_display' => 'invisible',
+        '#default_value' => $index,
+      ),
+    );
+    if ($multiple) {
+      $row_elements[$option]['enabled'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Enabled'),
+        '#title_display' => 'invisible',
+        '#default_value' => in_array($option, $default_value),
+      );
+    }
+    else {
+      $parents = array(
+        $field['field_name'],
+        $langcode,
+        'table',
+        'elements',
+        'enabled',
+      );
+      $parents_for_id = array_merge($parents, array($option));
+
+      $row_elements[$option]['enabled'] = array(
+        '#type' => 'radio',
+        '#title' => t('Enabled'),
+        '#parents' => $parents,
+        '#id' => drupal_html_id('edit-' . implode('-', $parents_for_id)),
+        '#return_value' => $option,
+        '#title_display' => 'invisible',
+        '#default_value' => in_array($option, $default_value) ? $option : FALSE,
+      );
+    }
+    $index++;
+  }
+
+  $element += array(
+    '#value_key' => $value_key,
+    '#element_validate' => array('options_table_field_widget_validate'),
+    '#properties' => $properties,
+    '#multiple' => $multiple,
+  );
+
+  $element['table'] = array(
+    '#theme' => 'options_table_form_table',
+    '#title' => $element['#title'],
+    '#caption' => $element['#description'],
+    'elements' => $row_elements,
+  );
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_widget_error().
+ */
+function options_table_field_widget_error($element, $error, $form, &$form_state) {
+  form_error($element, $error['message']);
+}
+
+/**
+ * Options Table widget theme function.
+ */
+function theme_options_table_form_table($variables) {
+  $elements = $variables['form']['elements'];
+  drupal_add_tabledrag($elements['#id'], 'order', 'sibling', 'options-table-weight');
+  $header = array(
+    $variables['form']['#title'],
+    t('Enabled'),
+    t('Weight'),
+  );
+  $rows = array();
+  foreach (element_children($elements) as $option) {
+    $element = &$variables['form']['elements'][$option];
+    $element['weight']['#attributes']['class'] = array('options-table-weight');
+    $row = array();
+    $row[] = drupal_render($element['label']);
+    $row[] = array('data' => drupal_render($element['enabled']), 'class' => array('checkbox'));
+    $row[] = drupal_render($element['weight']);
+    $row = array('data' => $row);
+    $row['class'][] = 'draggable';
+    $row['class'][] = 'tabledrag-root';
+    $rows[] = $row;
+  }
+
+  $output = '';
+  if (empty($rows)) {
+    $rows[] = array(array('data' => $variables['form']['#empty_text'], 'colspan' => '3'));
+  }
+  $output .= theme('table', array(
+    'header' => $header,
+    'rows' => $rows,
+    'caption' => $variables['form']['#caption'],
+    'attributes' => array('id' => $elements['#id']),
+  ));
+  return $output;
+}
+
+/**
+ * Form element validation handler for options element.
+ */
+function options_table_field_widget_validate($element, &$form_state) {
+  $properties = $element['#properties'];
+  $selected_options = array();
+
+  if ($element['#multiple']) {
+    foreach (element_children($element['table']['elements']) as $item) {
+      if ($element['table']['elements'][$item]['enabled']['#value']) {
+        $selected_options[$element['table']['elements'][$item]['weight']['#value']] = $item;
+      }
+    }
+  }
+  else {
+    foreach (element_children($element['table']['elements']) as $item) {
+      $selected_options[] = $element['table']['elements'][$item]['enabled']['#value'];
+      break;
+    }
+  }
+
+  if ($element['#required'] && empty($selected_options)) {
+    form_error($element, t('!name field is required.', array('!name' => $element['#title'])));
+  }
+
+  if ($properties['empty_option']) {
+    $index = array_search('_none', $selected_options, TRUE);
+    if ($index !== FALSE) {
+      unset($selected_options[$index]);
+    }
+  }
+
+  ksort($selected_options);
+  $items = array();
+  foreach ($selected_options as $selected) {
+    $items[] = array($element['#value_key'] => $selected);
+  }
+
+  form_set_value($element, $items, $form_state);
+}
