@@ -21,7 +21,7 @@ class porto_views_views_plugin_layouts extends views_plugin_style {
   /**
    * Render the given style.
    */
-  
+
   function options_form(&$form, &$form_state) {
     parent::options_form($form, $form_state);
     $form['porto_views'] = array(
@@ -37,7 +37,8 @@ class porto_views_views_plugin_layouts extends views_plugin_style {
   			'blog_timeline' => t('Blog Timeline'),
   			// will add later 'blog_carousel' => t('Blog Carousel'),
   			'carousel' => t('Carousel'),
-  			'portfolio_two' => t('Portfolio Two Columns'),
+        'story_tag' => t('Story Tag'),
+        'portfolio_two' => t('Portfolio Two Columns'),
   			'portfolio_three' => t('Portfolio Three Columns'),
   			'portfolio_four' => t('Portfolio Four Columns'),
   			'portfolio_full' => t('Portfolio Fullwidth'),

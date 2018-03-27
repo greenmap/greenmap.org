@@ -4,7 +4,7 @@
  * Implements hook_views_data_alter()
  */
 function porto_views_views_data_alter(&$data) {
-	
+
   $data['node']['term_node_tid'] = array(
     'title' => t('Taxonomy terms on node'),
     'help' => t('Relate nodes to taxonomy terms, specifying which vocabulary or vocabularies to use. This relationship will cause duplicated records if there are multiple terms.'),
@@ -20,7 +20,7 @@ function porto_views_views_data_alter(&$data) {
       'no group by' => TRUE,
     ),
   );
-    
+
 }
 
 /**
@@ -28,16 +28,17 @@ function porto_views_views_data_alter(&$data) {
  */
 function porto_views_preprocess_views_view(&$vars) {
   $view = $vars['view'];
- 
+
   if ($view->style_plugin->plugin_name == 'porto_views') {
     // Assign views plugin layout option to $vars['layout']
-	  $vars['layout'] = $view->style_plugin->options['porto_views']['optionset'];	 	  
+	  $vars['layout'] = $view->style_plugin->options['porto_views']['optionset'];
 	  // Add css/js for layouts that need it.
 	  switch ($view->style_plugin->options['porto_views']['optionset']) {
 		  case 'blog-full':
 			  drupal_add_js(drupal_get_path('module', 'porto_views') . '/js/blog_masonry.js');
 		  break;
-		  case 'portfolio_two':
+			case 'story_tag':
+			case 'portfolio_two':
 		  case 'portfolio_three':
 		  case 'portfolio_four':
 		  case 'portfolio_full':
@@ -46,6 +47,6 @@ function porto_views_preprocess_views_view(&$vars) {
 		  break;
 
 	  }
-  }  
+  }
 
 }

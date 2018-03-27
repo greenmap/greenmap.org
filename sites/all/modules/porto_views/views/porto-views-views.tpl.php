@@ -18,16 +18,16 @@ $count = 0;
   <?php case 'blog_timeline': ?>
     <section class="timeline" id="timeline">
 		  <div class="timeline-body">
-	    
-		    <?php 
+
+		    <?php
 			    $date_count = 0;
 			    $dates = array();
 			    $dates_check = array();
-			    
+
 			    foreach ($view->result as $date) {
 				    $dates_check[] = format_date($date->node_created, 'custom', 'F Y');
 				  }
-			  
+
 			    foreach ($view->result as $date) {
 				    $date = format_date($date->node_created, 'custom', 'F Y');
 				    if ($date_count == 0) {
@@ -39,16 +39,16 @@ $count = 0;
 				    else {
 					    $new = FALSE;
 				    }
-				    
+
 				    $dates[$date_count] = array(
 					    'date' => $date,
-					    'new' => $new, 
+					    'new' => $new,
 				    );
-				    
+
 				    $date_count ++;
-			    } 		    
+			    }
 			  ?>
-		  
+
 	      <?php foreach ($rows as $id => $row): ?>
 	        <?php if ($dates[$count]['new'] == TRUE): ?>
 	          <div class="timeline-date"><h3><?php print $dates[$count]['date']; ?></h3></div>
@@ -57,9 +57,9 @@ $count = 0;
 	        <?php print $row; $count++; ?>
 	        </article>
 	      <?php endforeach; ?>
-	      
-      </div> 
-    </section>  
+
+      </div>
+    </section>
   <?php break; ?>
   <?php case 'carousel': ?>
   <div class="row center">
@@ -68,31 +68,31 @@ $count = 0;
 		    <?php print $row;?>
 		  <?php endforeach; ?>
 	  </div>
-  </div>    
+  </div>
   <?php break; ?>
   <?php case 'categories': ?>
   <ul class="nav nav-list primary pull-bottom">
 	  <?php foreach ( $rows as $id => $row ): ?>
 	    <?php print $row;?>
 	  <?php endforeach; ?>
-  </ul>    
+  </ul>
   <?php break; ?>
   <?php case 'portfolio_timeline': ?>
     <section class="timeline" id="timeline">
 		  <div class="timeline-body">
-	    
-		    <?php 
+
+		    <?php
 			    $date_count = 0;
 			    $dates = array();
 			    $dates_check = array();
-			    
+
 			    foreach ($view->result as $date) {
 				    $dates_check[] = format_date($date->node_created, 'custom', 'F Y');
 				  }
-			  
+
 			    foreach ($view->result as $date) {
 				    $date = format_date($date->node_created, 'custom', 'F Y');
-				    
+
 				    if ($date_count == 0) {
 					    $new = TRUE;
 				    }
@@ -102,16 +102,16 @@ $count = 0;
 				    else {
 					    $new = FALSE;
 				    }
-				    
+
 				    $dates[$date_count] = array(
 					    'date' => $date,
-					    'new' => $new, 
+					    'new' => $new,
 				    );
-				    
+
 				    $date_count ++;
-			    } 		    
+			    }
 			  ?>
-		  
+
 	      <?php foreach ($rows as $id => $row): ?>
 	        <?php if ($dates[$count]['new'] == TRUE): ?>
 	          <div class="timeline-date"><h3><?php print $dates[$count]['date']; ?></h3></div>
@@ -120,10 +120,11 @@ $count = 0;
 	        <?php print $row; $count++; ?>
 	        </article>
 	      <?php endforeach; ?>
-	      
-      </div> 
-    </section>  
+
+      </div>
+    </section>
   <?php break; ?>
+  <?php case 'story_tag': ?>
   <?php case 'portfolio_two': ?>
   <?php case 'portfolio_three': ?>
   <?php case 'portfolio_four': ?>
@@ -150,19 +151,19 @@ $count = 0;
 		<div class="container">
 			<div class="row" >
 				<div class="col-md-12">
-					<h2><?php print t('Latest '); ?><strong><?php print t('Projects'); ?></strong></h2>  
-					<div class="owl-carousel owl-carousel-spaced" data-plugin-options='{"items": 4}'>  
+					<h2><?php print t('Latest '); ?><strong><?php print t('Projects'); ?></strong></h2>
+					<div class="owl-carousel owl-carousel-spaced" data-plugin-options='{"items": 4}'>
 						<?php foreach ($rows as $id => $row) {print $row;} ?>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
-  </section>	
+  </section>
   <?php break; ?>
   <?php case 'portfolio_related_projects': ?>
-    <div class="row">	
+    <div class="row">
 			<ul class="portfolio-list">
-	    <?php foreach ($rows as $id => $row): ?> 
+	    <?php foreach ($rows as $id => $row): ?>
 	      <li class="col-md-3">
 		      <?php print $row; ?>
 	      </li>
@@ -173,7 +174,7 @@ $count = 0;
     <ul class="nav nav-pills sort-source" data-sort-id="portfolio" data-option-key="filter">
       <li data-option-value="*" class="active"><a href="#"><?php echo t('Show All'); ?></a></li>
       <?php foreach ($rows as $id => $row) {print $row;} ?>
-    </ul>  
+    </ul>
     <hr>
   <?php break; ?>
   <?php case 'portfolio_filter_full': ?>
@@ -184,21 +185,21 @@ $count = 0;
           <?php foreach ($rows as $id => $row) {print $row;} ?>
         </ul>
 		  </div>
-    </div>      
+    </div>
   <?php break; ?>
   <?php case 'team_filter': ?>
     <ul class="nav nav-pills sort-source" data-sort-id="team" data-option-key="filter">
       <li data-option-value="*" class="primary active"><a href="#"><?php echo t('Show All'); ?></a></li>
       <?php foreach ($rows as $id => $row) {print $row;} ?>
-    </ul>  
+    </ul>
     <hr>
   <?php break; ?>
     <?php case 'shop': ?>
     <div class="row">
 			<ul class="products product-thumb-info-list" data-plugin-masonry data-plugin-options='{"layoutMode": "fitRows"}'>
         <?php foreach ($rows as $id => $row) {print $row;} ?>
-	  	</ul>  
-    </div> 
+	  	</ul>
+    </div>
   <?php break; ?>
   <?php case 'team': ?>
     <div id="team">
@@ -206,8 +207,8 @@ $count = 0;
 	  		<ul class="team-list sort-destination" data-sort-id="team">
           <?php foreach ($rows as $id => $row) {print $row;} ?>
 	  		</ul>
-      </div>	  
-    </div> 
+      </div>
+    </div>
     <hr>
   <?php break; ?>
   <?php default: ?>

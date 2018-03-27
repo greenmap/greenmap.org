@@ -28,7 +28,8 @@ function super_login_uninstall() {
   variable_del('super_login_placeholder');
   variable_del('super_login_css');
   variable_del('super_login_button_image');
-  variable_del('super_login_autofill');
+  variable_del('super_login_autofocus');
   variable_del('super_login_placeholder');
+  variable_del('super_login_submit_text');
 }
 

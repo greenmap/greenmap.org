@@ -10,15 +10,14 @@
  * Modify theme_field()
  */
 function porto_sub_field($variables) {
-	
+
   $output = '';
   // Render the label, if it's not hidden.
   if (!$variables['label_hidden']) {
-    $output .= '<div class="field-label"' . $variables['title_attributes'] . '>' . $variables['label'] . ':&nbsp;</div>';  
+    $output .= '<div class="field-label"' . $variables['title_attributes'] . '>' . $variables['label'] . ':&nbsp;</div>';
   }
   switch ($variables['element']['#field_name']) {
 	  case 'field_tags':
-	  case 'field_portfolio_category':
 	  case 'field_product_categories':
 	  case 'field_product_tags':
 	  case 'field_team_category':
@@ -31,11 +30,13 @@ function porto_sub_field($variables) {
 	  case 'field_small_caption':
 	  case 'field_text_color':
 	  case 'field_team_bio':
-    case 'field_personal_website_link':
     case 'field_twitter_link':
     case 'field_facebook_link':
     case 'field_linkedin_link':
+    case 'field_personal_website_link':
     case 'field_active':
+  //  case 'field_name':
+  //  case 'field_activity_year':
 	    foreach ($variables['items'] as $delta => $item) {
 	      $rendered_tags[] = drupal_render($item);
 	    }
@@ -90,11 +91,46 @@ function porto_sub_field($variables) {
 		    $output .= '</div>';
 	    }
 	  break;
-	  case 'field_portfolio_skills':
+    case 'field_start_date':
+	    foreach ($variables['items'] as $delta => $item) {
+	      $output .= '<li><i class="icon icon-calendar"></i>' . drupal_render($item) . '</li>';
+	    }
+	  break;
+    case 'field_project_type':
 	    foreach ($variables['items'] as $delta => $item) {
 	      $output .= '<li><i class="icon icon-check-circle"></i>' . drupal_render($item) . '</li>';
-	    }	    
+	    }
 	  break;
+    case 'field_project_theme':
+      foreach ($variables['items'] as $delta => $item) {
+        $output .= '<li><i class="icon icon-check-circle"></i>' . drupal_render($item) . '</li>';
+      }
+    break;
+    case 'field_project_user_group':
+      foreach ($variables['items'] as $delta => $item) {
+        $output .= '<li><i class="icon icon-check-circle"></i>' . drupal_render($item) . '</li>';
+      }
+    break;
+    case 'field_project_scale':
+      foreach ($variables['items'] as $delta => $item) {
+        $output .= '<li><i class="icon icon-check-circle"></i>' . drupal_render($item) . '</li>';
+      }
+    break;
+    case 'field_project_scale_name':
+      foreach ($variables['items'] as $delta => $item) {
+        $output .= '<li><i class="icon icon-check-circle"></i>' . drupal_render($item) . '</li>';
+      }
+    break;
+    case 'field_project_funding':
+      foreach ($variables['items'] as $delta => $item) {
+        $output .= '<li><i class="icon icon-check-circle"></i>' . drupal_render($item) . '</li>';
+      }
+    break;
+    case 'field_tags':
+      foreach ($variables['items'] as $delta => $item) {
+        $output .= '<li><i class="icon icon-check-circle"></i>' . drupal_render($item) . '</li>';
+      }
+    break;
 	  default:
 	    $output .= '<div class="field-items"' . $variables['content_attributes'] . '>';
 	    // Default rendering taken from theme_field().
@@ -107,6 +143,6 @@ function porto_sub_field($variables) {
 	    $output = '<div class="' . $variables['classes'] . '"' . $variables['attributes'] . '>' . $output . '</div>';
 	  break;
   }
-   
+
   return $output;
 }
